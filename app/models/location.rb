@@ -5,4 +5,7 @@ class Location < ApplicationRecord
     less_than_or_equal_to: 180,
     more_than_or_equal_to: -180
   }
+
+  has_many :events
+
 end
