@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :locations
+  resources :events
   root to: 'visitors#index'
   devise_for :users
   resources :users
