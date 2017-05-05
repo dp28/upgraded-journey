@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Origin location:
+  = @route.origin_location_id
+p
+  strong Destination location:
+  = @route.destination_location_id
+p
+  strong Transport mode:
+  = @route.transport_mode
+
+= link_to 'Edit', edit_route_path(@route)
+'  |
+= link_to 'Back', routes_path
