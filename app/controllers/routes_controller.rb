@@ -24,11 +24,18 @@ class RoutesController < ApplicationController
   # POST /routes
   # POST /routes.json
   def create
-    @route = Route.new(route_params)
+    origin = Location.new(origin_params)
+    destination = Location.new(destination_params)
+    @route = Route.new(
+      **route_params.symbolize_keys,
+      origin_location: origin,
+      destination_location: destination,
+      user: current_user
+    )
 
     respond_to do |format|
       if @route.save
-        format.html { redirect_to @route, notice: 'Route was successfully created.' }
+        format.html { redirect_to [current_user, @route], notice: 'Route was successfully created.' }
         format.json { render :show, status: :created, location: @route }
       else
         format.html { render :new }
@@ -42,7 +49,7 @@ class RoutesController < ApplicationController
   def update
     respond_to do |format|
       if @route.update(route_params)
-        format.html { redirect_to @route, notice: 'Route was successfully updated.' }
+        format.html { redirect_to [current_user, @route], notice: 'Route was successfully updated.' }
         format.json { render :show, status: :ok, location: @route }
       else
         format.html { render :edit }
@@ -56,7 +63,7 @@ class RoutesController < ApplicationController
   def destroy
     @route.destroy
     respond_to do |format|
-      format.html { redirect_to routes_url, notice: 'Route was successfully destroyed.' }
+      format.html { redirect_to user_url(current_user), notice: 'Route was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -69,6 +76,14 @@ class RoutesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def route_params
-      params.require(:route).permit(:origin_location_id, :destination_location_id, :transport_mode)
+      params.require(:route).permit(:transport_mode, :name)
+    end
+
+    def origin_params
+      params.require(:origin_location).permit(:latitude, :longitude)
+    end
+
+    def destination_params
+      params.require(:destination_location).permit(:latitude, :longitude)
     end
 end

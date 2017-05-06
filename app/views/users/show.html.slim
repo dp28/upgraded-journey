@@ -8,25 +8,7 @@ p
 
 h4 My Routes
 
-table
-  thead
-    tr
-      th Origin
-      th Destination
-      th Transport mode
-      th
-      th
-      th
-
-  tbody
-    - @user.routes.each do |route|
-      tr
-        td = route.origin_location_id
-        td = route.destination_location_id
-        td = route.transport_mode
-        td = link_to 'Show', route
-        td = link_to 'Edit', edit_route_path(route)
-        td = link_to 'Destroy', route, data: { confirm: 'Are you sure?' }, method: :delete
+== render 'routes/routes', routes: @user.routes
 
 br
 

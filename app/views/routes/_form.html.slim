@@ -7,11 +7,33 @@
           li = message
 
   .field
-    = f.label :origin_location_id
-    = f.number_field :origin_location_id
-  .field
-    = f.label :destination_location_id
-    = f.number_field :destination_location_id
+    = f.label :name
+    = f.text_field :name
+
+  .location.origin
+    h4 Origin
+
+    = fields_for :origin_location, @route.origin do |location_fields|
+      .field
+        = location_fields.label :latitude
+        = location_fields.number_field :latitude
+
+      .field
+        = location_fields.label :longitude
+        = location_fields.number_field :longitude
+
+
+    h4 Destination
+
+    = fields_for :destination_location, @route.destination do |location_fields|
+      .field
+        = location_fields.label :latitude
+        = location_fields.number_field :latitude
+
+      .field
+        = location_fields.label :longitude
+        = location_fields.number_field :longitude
+
   .field
     = f.label :transport_mode
     = f.select :transport_mode, options_for_select(Route::TRANSPORT_MODES)

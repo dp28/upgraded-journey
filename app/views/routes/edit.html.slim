@@ -2,7 +2,7 @@ h1 Editing route
 
 == render 'form'
 
-= link_to 'Show', @route
+= link_to 'Show', [current_user, @route]
 '  |
-= link_to 'Back', user_routes_path(current_user)
+= link_to 'Back', user_path(current_user)
 

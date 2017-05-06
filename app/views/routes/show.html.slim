@@ -1,6 +1,9 @@
 p#notice = notice
 
 p
+  strong Name:
+  = @route.name
+p
   strong Origin location:
   = @route.origin_location_id
 p
@@ -12,4 +15,4 @@ p
 
 = link_to 'Edit', edit_user_route_path(current_user, @route)
 '  |
-= link_to 'Back', user_routes_path(current_user)
+= link_to 'Back', user_path(current_user)
