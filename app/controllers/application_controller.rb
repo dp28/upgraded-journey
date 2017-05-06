@@ -9,4 +9,12 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:name])
   end
 
+  helper_method def gmaps_src
+    "https://maps.googleapis.com/maps/api/js?key=#{gmaps_api_key}&callback=initMap"
+  end
+
+  def gmaps_api_key
+    ENV['GMAPS_API_KEY']
+  end
+
 end

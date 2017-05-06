@@ -1,40 +1,78 @@
-= form_for [current_user, @route] do |f|
-  - if @route.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@route.errors.count, "error")} prohibited this route from being saved:"
-      ul
-        - @route.errors.full_messages.each do |message|
-          li = message
+.row
+  = form_for [current_user, @route] do |f|
+    - if @route.errors.any?
+      #error_explanation
+        h2 = "#{pluralize(@route.errors.count, "error")} prohibited this route from being saved:"
+        ul
+          - @route.errors.full_messages.each do |message|
+            li = message
 
-  .field
-    = f.label :name
-    = f.text_field :name
-
-  .location.origin
-    h4 Origin
-
-    = fields_for :origin_location, @route.origin do |location_fields|
-      .field
-        = location_fields.label :latitude
-        = location_fields.number_field :latitude
+    .col-xs-12.col-sm-3
 
       .field
-        = location_fields.label :longitude
-        = location_fields.number_field :longitude
-
-
-    h4 Destination
-
-    = fields_for :destination_location, @route.destination do |location_fields|
-      .field
-        = location_fields.label :latitude
-        = location_fields.number_field :latitude
+        = f.label :name
+        = f.text_field :name
 
       .field
-        = location_fields.label :longitude
-        = location_fields.number_field :longitude
+        = f.label :transport_mode
+        = f.select :transport_mode, options_for_select(Route::TRANSPORT_MODES)
 
-  .field
-    = f.label :transport_mode
-    = f.select :transport_mode, options_for_select(Route::TRANSPORT_MODES)
-  .actions = f.submit
+      .actions = f.submit
+
+    .col-xs-12.col-sm-9
+      label Origin (O) & destination (D)
+
+      #map style="height: 400px; width: 600px;"
+
+      .location style="visibility: hidden"
+        = fields_for :origin_location, @route.origin_location do |fields|
+          = fields.hidden_field :latitude, id: 'O_lat'
+          = fields.hidden_field :longitude, id: 'O_lng'
+
+        = fields_for :destination_location, @route.destination_location do |fields|
+          = fields.hidden_field :latitude, id: 'D_lat'
+          = fields.hidden_field :longitude, id: 'D_lng'
+
+javascript:
+
+  function startMap() {
+    var edinburgh = {lat: 55.9533, lng: -3.1883};
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: edinburgh,
+      zoom: 11
+    });
+
+    var clickCount = 0;
+
+    function addLocation(coords, type) {
+      addMarker(coords, type);
+      document.getElementById(type + '_lat').value = coords.lat;
+      document.getElementById(type + '_lng').value = coords.lng;
+    }
+
+    function getCoords(event) {
+      return { lat: event.latLng.lat(), lng: event.latLng.lng() };
+    }
+
+    function addMarker(coords, label) {
+      return new google.maps.Marker({
+        position: coords,
+        map: map,
+        label: label
+      });
+    }
+
+    var listener = google.maps.event.addListener(map, 'click', function(event) {
+      clickCount++;
+      var coords = getCoords(event)
+
+      if (clickCount < 2) {
+        addLocation(coords, 'O')
+      }
+      else {
+        addLocation(coords, 'D')
+        google.maps.event.removeListener(listener)
+      }
+    })
+  }

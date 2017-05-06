@@ -1,18 +1,36 @@
 p#notice = notice
 
-p
-  strong Name:
-  = @route.name
-p
-  strong Origin location:
-  = @route.origin_location_id
-p
-  strong Destination location:
-  = @route.destination_location_id
-p
-  strong Transport mode:
-  = @route.transport_mode
+.row
+  .col-xs-12.col-sm-3
+    p
+      strong Name:
+      = @route.name
+
+    p
+      strong Transport mode:
+      = @route.transport_mode
+
+  .col-xs-12.col-sm-9
+    p
+      strong Origin (O) & destination (D)
+
+    #map style="height: 400px; width: 600px;"
 
 = link_to 'Edit', edit_user_route_path(current_user, @route)
 '  |
 = link_to 'Back', user_path(current_user)
+
+javascript:
+
+  function startMap() {
+    addMap({
+      O: {
+        lat: #{@route.origin.latitude},
+        lng: #{@route.origin.longitude}
+      },
+      D:  {
+        lat: #{@route.destination.latitude},
+        lng: #{@route.destination.longitude}
+      }
+    })
+  }

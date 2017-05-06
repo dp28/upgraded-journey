@@ -1,0 +1,54 @@
+- identifier = location.try(:id) || rand
+
+div id="#map_{identifier}" style="height: 600px; width: 600px;"
+
+.location
+= fields_for field_name, location do |fields|
+  = fields.number_field :latitude, id: "#{identifier}_lat"
+  = fields.number_field :longitude, id: "#{identifier}_lon"
+
+javascript:
+
+  function startMap() {
+    var edinburgh = {lat: 55.9533, lng: -3.1883};
+
+    var map = new google.maps.Map(document.getElementById('map_#{identifier}'), {
+      center: edinburgh,
+      zoom: 11
+    });
+
+    var clickCount = 0;
+
+    function addOrigin(coords) {
+      addMarker(coords, 'O');
+    }
+
+    function addDestination(coords) {
+      addMarker(coords, 'D');
+    }
+
+    function getCoords(event) {
+      return { lat: event.latLng.lat(), lng: event.latLng.lng() };
+    }
+
+    function addMarker(coords, label) {
+      return new google.maps.Marker({
+        position: coords,
+        map: map,
+        label: label
+      });
+    }
+
+    var listener = google.maps.event.addListener(map, 'click', function(event) {
+      clickCount++;
+      var coords = getCoords(event)
+
+      if (clickCount < 2) {
+        addOrigin(coords)
+      }
+      else {
+        addDestination(coords)
+        google.maps.event.removeListener(listener)
+      }
+    })
+  }

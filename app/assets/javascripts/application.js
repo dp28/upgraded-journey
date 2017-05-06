@@ -15,3 +15,27 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
+
+function initMap() {
+  if (window.startMap) {
+    window.startMap();
+  }
+}
+
+function addMap(namedLocations, id) {
+  id = id || 'map'
+  var firstLocationName = Object.keys(namedLocations)[0];
+
+  var map = new google.maps.Map(document.getElementById(id), {
+    center: namedLocations[firstLocationName],
+    zoom: 12
+  });
+
+  Object.keys(namedLocations).forEach(function(name) {
+    new google.maps.Marker({
+      position: namedLocations[name],
+      map: map,
+      label: name
+    });
+  })
+}
