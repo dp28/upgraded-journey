@@ -17,6 +17,20 @@
         = f.label :transport_mode
         = f.select :transport_mode, options_for_select(Route::TRANSPORT_MODES)
 
+      .field
+        = f.label :date
+        = f.date_field :date
+
+      .field
+        = f.label :start_hours
+        = f.number_field :start_hours, step: 1, min: 0, max: 24
+        | :00
+
+      .field
+        = f.label :end_hours
+        = f.number_field :end_hours, step: 1, min: 0, max: 24
+        | :00
+
       .actions = f.submit
 
     .col-xs-12.col-sm-9

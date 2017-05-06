@@ -3,12 +3,25 @@ p#notice = notice
 .row
   .col-xs-12.col-sm-3
     p
-      strong Name:
+      strong Name: &nbsp;
       = @route.name
 
     p
-      strong Transport mode:
+      strong Transport mode: &nbsp;
       = @route.transport_mode
+
+    - if @route.date
+      p
+        strong Date: &nbsp;
+        = @route.date
+
+    - if @route.start_hours && @route.end_hours
+      p
+        strong Time: &nbsp;
+        = @route.start_hours.to_s.rjust(2, '0')
+        | :00 -  &nbsp;
+        = @route.end_hours.to_s.rjust(2, '0')
+        | :00
 
   .col-xs-12.col-sm-9
     p
