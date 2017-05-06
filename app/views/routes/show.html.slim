@@ -10,6 +10,6 @@ p
   strong Transport mode:
   = @route.transport_mode
 
-= link_to 'Edit', edit_route_path(@route)
+= link_to 'Edit', edit_user_route_path(current_user, @route)
 '  |
-= link_to 'Back', routes_path
+= link_to 'Back', user_routes_path(current_user)

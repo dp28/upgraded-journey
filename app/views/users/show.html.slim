@@ -1,4 +1,12 @@
-h1 Listing routes
+h3 User
+p
+  | Name:
+  = @user.name
+p
+  | Email:
+  = @user.email
+
+h4 My Routes
 
 table
   thead
@@ -11,7 +19,7 @@ table
       th
 
   tbody
-    - @routes.each do |route|
+    - @user.routes.each do |route|
       tr
         td = route.origin_location_id
         td = route.destination_location_id
@@ -22,5 +30,4 @@ table
 
 br
 
-= link_to 'New Route', new_user_route_path(current_user)
-= link_to 'My account', user_path(current_user)
+= link_to 'New Route', new_user_route_path(@user)

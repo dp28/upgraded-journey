@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505190413) do
+ActiveRecord::Schema.define(version: 20170506110547) do
 
   create_table "events", force: :cascade do |t|
     t.integer  "location_id", null: false
@@ -30,13 +30,13 @@ ActiveRecord::Schema.define(version: 20170505190413) do
   end
 
   create_table "routes", force: :cascade do |t|
-    t.integer  "origin_location_id",      null: false
-    t.integer  "destination_location_id", null: false
-    t.string   "transport_mode",          null: false
+    t.integer  "origin_location_id"
+    t.integer  "destination_location_id"
+    t.string   "transport_mode"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.index ["destination_location_id"], name: "index_routes_on_destination_location_id"
-    t.index ["origin_location_id"], name: "index_routes_on_origin_location_id"
+    t.integer  "user_id"
+    t.index ["user_id"], name: "index_routes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
