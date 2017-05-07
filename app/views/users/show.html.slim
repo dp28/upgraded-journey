@@ -11,8 +11,15 @@ br
 
 h4 My Routes
 
-== render 'routes/routes', routes: @user.routes
+ul.list-group
 
-br
+- @user.routes.each do |route|
+  li.list-group-item style="max-width: 400px;"
+    = link_to route.name, user_route_path(@user, route)
 
-= link_to 'New Route', new_user_route_path(@user)
+    = link_to '✕', [current_user, @route], data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-xs btn-danger', style: 'float: right; color: white; margin-left: 10px;'
+
+    span.badge.badge-primary
+      = pluralize(route.alerts.count, 'alert')
+
+= link_to 'New Route...', new_user_route_path(@user), class: 'btn btn-primary', style: 'color: white;'

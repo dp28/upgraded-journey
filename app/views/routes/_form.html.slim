@@ -7,36 +7,41 @@
           - @route.errors.full_messages.each do |message|
             li = message
 
-    .col-xs-12.col-sm-3
+    .col-xs-12.col-sm-5.col-md-4
 
-      .field
-        = f.label :name
-        = f.text_field :name, class: 'form-control', style: 'width: 170px;'
+      table
+        tr
+          td= f.label :name
+          td= f.text_field :name, class: 'form-control', style: 'width: 170px;'
 
-      .field
-        = f.label :transport_mode
-        = f.select :transport_mode, options_for_select(Route::TRANSPORT_MODES)
+        tr
+          td= f.label :transport_mode
+          td= f.select :transport_mode, options_for_select(Route::TRANSPORT_MODES)
 
-      .field
-        = f.label :date
-        = f.date_field :date, class: 'form-control', style: 'width: 170px;'
+        tr
+          td= f.label :date
+          td= f.date_field :date, class: 'form-control', style: 'width: 170px;'
 
-      .field
-        = f.label :start_hours
-        = f.number_field :start_hours, step: 1, min: 0, max: 24, class: 'form-control', style: 'width: 60px; display: inline;'
-        | :00
+        tr
+          td= f.label :start_hours, 'Start time'
+          td
+            = f.number_field :start_hours, step: 1, min: 0, max: 24, class: 'form-control', style: 'width: 60px; display: inline;'
+            | :00
 
-      .field
-        = f.label :end_hours
-        = f.number_field :end_hours, step: 1, min: 0, max: 24, class: 'form-control', style: 'width: 60px; display: inline;'
-        | :00
+        tr
+          td= f.label :end_hours, 'End time'
+          td
+            = f.number_field :end_hours, step: 1, min: 0, max: 24, class: 'form-control', style: 'width: 60px; display: inline;'
+            | :00
 
-      .actions = f.submit class: 'btn btn-primary'
+        tr
+          td
+          td= f.submit class: 'btn btn-primary'
 
-    .col-xs-12.col-sm-9
+    .col-xs-12.col-sm-7.col-md-8
       label Origin (O) & destination (D)
 
-      #map style="height: 400px; width: 600px;"
+      #map style="height: 400px; max-width: 600px; width: 100%"
 
       .location style="visibility: hidden"
         = fields_for :origin_location, @route.origin_location do |fields|
