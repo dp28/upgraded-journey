@@ -1,7 +1,7 @@
 p#notice = notice
 
 .row
-  .col-xs-12.col-sm-5
+  .col-xs-12.col-md-5
     h3
       = @route.name
 
@@ -24,19 +24,19 @@ p#notice = notice
 
     p: strong Alerts
 
-    ul
+    ul.list-group
       - @route.alerts.each do |alert|
-        li
+        li.list-group-item
           = alert.value
           | &nbsp;
           = Alert::UNITS_TO_NAMES[alert.unit]
           | &nbsp;
-          = link_to '✕', [current_user, @route, alert], data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-sm btn-danger'
-      li
+          = link_to '✕', [current_user, @route, alert], data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-xs btn-danger', style: 'float: right;'
+      li.list-group-item
         == render 'alerts/form', alert: Alert.new(route: @route)
 
 
-  .col-xs-12.col-sm-7
+  .col-xs-12.col-md-7
     p
       strong Origin (O) & destination (D)
 

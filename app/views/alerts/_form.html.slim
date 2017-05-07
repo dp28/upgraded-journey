@@ -6,13 +6,13 @@
         - alert.errors.full_messages.each do |message|
           li = message
   .field
-    = f.number_field :value, step: 1, min: 0, max: 100
+    = f.number_field :value, step: 1, min: 0, max: 100, class: 'form-control', style: 'width: 60px;'
     | &nbsp;
     = f.select :unit, Alert::UNITS_TO_NAMES.to_a.map(&:reverse), class: 'form_control'
     | &nbsp;
 
     = f.hidden_field :route_id
-    = f.submit '✔', class: 'btn btn-success btn-sm'
+    = f.submit '✔', class: 'btn btn-success btn-xs', style: 'float: right;'
 
 javascript:
 
