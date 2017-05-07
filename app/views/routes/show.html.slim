@@ -1,9 +1,8 @@
 p#notice = notice
 
 .row
-  .col-xs-12.col-sm-3
-    p
-      strong Name: &nbsp;
+  .col-xs-12.col-sm-5
+    h3
       = @route.name
 
     p
@@ -23,7 +22,21 @@ p#notice = notice
         = @route.end_hours.to_s.rjust(2, '0')
         | :00
 
-  .col-xs-12.col-sm-9
+    p: strong Alerts
+
+    ul
+      - @route.alerts.each do |alert|
+        li
+          = alert.value
+          | &nbsp;
+          = Alert::UNITS_TO_NAMES[alert.unit]
+          | &nbsp;
+          = link_to '✕', [current_user, @route, alert], data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-sm btn-danger'
+      li
+        == render 'alerts/form', alert: Alert.new(route: @route)
+
+
+  .col-xs-12.col-sm-7
     p
       strong Origin (O) & destination (D)
 

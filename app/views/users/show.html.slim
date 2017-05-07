@@ -1,10 +1,13 @@
-h3 User
-p
-  | Name: &nbsp;
+h3
   = @user.name
-p
+  - if current_user.id == @user.id
+    = link_to '', edit_user_registration_path(@user), class: 'btn btn-sm glyphicon glyphicon-pencil', style: 'margin-left: 10px;'
+
+.details
   | Email: &nbsp;
   = @user.email
+
+br
 
 h4 My Routes
 

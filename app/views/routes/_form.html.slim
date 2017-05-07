@@ -11,7 +11,7 @@
 
       .field
         = f.label :name
-        = f.text_field :name
+        = f.text_field :name, class: 'form-control', style: 'width: 170px;'
 
       .field
         = f.label :transport_mode
@@ -19,19 +19,19 @@
 
       .field
         = f.label :date
-        = f.date_field :date
+        = f.date_field :date, class: 'form-control', style: 'width: 170px;'
 
       .field
         = f.label :start_hours
-        = f.number_field :start_hours, step: 1, min: 0, max: 24
+        = f.number_field :start_hours, step: 1, min: 0, max: 24, class: 'form-control', style: 'width: 60px; display: inline;'
         | :00
 
       .field
         = f.label :end_hours
-        = f.number_field :end_hours, step: 1, min: 0, max: 24
+        = f.number_field :end_hours, step: 1, min: 0, max: 24, class: 'form-control', style: 'width: 60px; display: inline;'
         | :00
 
-      .actions = f.submit
+      .actions = f.submit class: 'btn btn-primary'
 
     .col-xs-12.col-sm-9
       label Origin (O) & destination (D)

@@ -1,0 +1,27 @@
+= form_for [current_user, alert.route, alert] do |f|
+  - if alert.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(alert.errors.count, "error")} prohibited this alert from being saved:"
+      ul
+        - alert.errors.full_messages.each do |message|
+          li = message
+  .field
+    = f.number_field :value, step: 1, min: 0, max: 100
+    | &nbsp;
+    = f.select :unit, Alert::UNITS_TO_NAMES.to_a.map(&:reverse), class: 'form_control'
+    | &nbsp;
+
+    = f.hidden_field :route_id
+    = f.submit '✔', class: 'btn btn-success btn-sm'
+
+javascript:
+
+  var select = document.getElementById('alert_unit')
+  var value = document.getElementById('alert_value')
+
+  function updateVisibility() {
+    value.style.display = select.value === 'ASAP' ? 'none' : 'inline'
+  }
+
+  select.addEventListener('change', updateVisibility)
+  updateVisibility()

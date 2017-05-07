@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170506174240) do
+ActiveRecord::Schema.define(version: 20170506185029) do
+
+  create_table "alerts", force: :cascade do |t|
+    t.integer  "route_id"
+    t.integer  "value"
+    t.string   "unit",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["route_id"], name: "index_alerts_on_route_id"
+  end
 
   create_table "events", force: :cascade do |t|
     t.integer  "location_id", null: false

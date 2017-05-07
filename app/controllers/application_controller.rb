@@ -9,6 +9,14 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:name])
   end
 
+  def after_sign_in_path_for(user)
+    if user.routes.any?
+      user_path user
+    else
+      new_user_route_path user
+    end
+  end
+
   helper_method def gmaps_src
     "https://maps.googleapis.com/maps/api/js?key=#{gmaps_api_key}&callback=initMap"
   end

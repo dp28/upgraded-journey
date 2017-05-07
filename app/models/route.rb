@@ -5,6 +5,7 @@ class Route < ApplicationRecord
   belongs_to :user
   belongs_to :origin_location, class_name: Location
   belongs_to :destination_location, class_name: Location
+  has_many :alerts
 
   alias origin origin_location
   alias destination destination_location
